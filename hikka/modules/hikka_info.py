@@ -69,13 +69,15 @@ class HikkaInfoMod(loader.Module):
         messagep = utils.answer(message, "🔥")
         ping_value = round((time.perf_counter_ns() - start) / 10**6, 3)
         uptime_value = utils.formatted_uptime()
+        pingm_value = self.config.get("pingm", "N/A")
         ping_hint_value = self.config["hint"] if random.choice([0, 0, 1]) == 1 else ""
 
     # Форматируем текст
         formatted_text = self.config["text"].format(
             ping=ping_value,
             uptime=uptime_value,
-            ping_hint=ping_hint_value  # Убедитесь, что pingm здесь не используется, если он не нужен
+            ping_hint=ping_hint_value,
+            pingm=pingm_value# Убедитесь, что pingm здесь не используется, если он не нужен
         )
 
     # Передаем отформатированный текст в utils.answer
