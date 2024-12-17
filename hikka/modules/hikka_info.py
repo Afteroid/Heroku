@@ -28,7 +28,7 @@ class HikkaInfoMod(loader.Module):
             ),
             loader.ConfigValue(
                 "text",
-                "{pingm}",  # Значение по умолчанию
+                "{ping}",  # Значение по умолчанию
                 lambda: self.strings("_cfg_text"),
             ),
             loader.ConfigValue(
@@ -67,8 +67,6 @@ class HikkaInfoMod(loader.Module):
         prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»"
         start = time.perf_counter_ns()
         messagep = utils.answer(message, "🔥")
-        if self.config["text"] is None:
-            self.config["text"] = "Ping: {ping}"
         ping_value = round((time.perf_counter_ns() - start) / 10**6, 3)
         uptime_value = utils.formatted_uptime()
         ping_hint_value = self.config["hint"] if random.choice([0, 0, 1]) == 1 else ""
@@ -77,7 +75,7 @@ class HikkaInfoMod(loader.Module):
         formatted_text = self.config["text"].format(
             ping=ping_value,
             uptime=uptime_value,
-            ping_hint=ping_hint_value
+            ping_hint=ping_hint_value  # Убедитесь, что pingm здесь не используется, если он не нужен
         )
 
     # Передаем отформатированный текст в utils.answer
