@@ -60,8 +60,7 @@ class HikkaInfoMod(loader.Module):
         _version = f'<i>{".".join(list(map(str, list(version.__version__))))}</i>'
         prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»"
         start = time.perf_counter_ns()
-        
-        pingm = utils.answer(message,self.config["text"].format(ping=round((time.perf_counter_ns() - start) / 10**6, 3),uptime=utils.formatted_uptime(),ping_hint=((self.config["hint"]) if random.choice([0, 0, 1]) == 1 else "")),)
+        pingm = utils.answer(messagep,self.config["text"].format(ping=round((time.perf_counter_ns() - start) / 10**6, 3),uptime=utils.formatted_uptime(),ping_hint=((self.config["hint"]) if random.choice([0, 0, 1]) == 1 else "")),)
 
         platform = utils.get_named_platform()
 
