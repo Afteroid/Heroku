@@ -27,11 +27,6 @@ class HikkaInfoMod(loader.Module):
                 doc=lambda: self.strings("_cfg_cst_msg"),
             ),
             loader.ConfigValue(
-                "text",
-                "{ping}",  # Значение по умолчанию
-                lambda: self.strings("_cfg_text"),
-            ),
-            loader.ConfigValue(
                 "custom_button",
                 ["🌘 Support chat", "https://t.me/heroku_talks"],
                 lambda: self.strings("_cfg_cst_btn"),
@@ -65,24 +60,6 @@ class HikkaInfoMod(loader.Module):
         build = utils.get_commit_url()
         _version = f'<i>{".".join(list(map(str, list(version.__version__))))}</i>'
         prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»"
-        start = time.perf_counter_ns()
-        messagep = utils.answer(message, "🔥")
-        ping_value = round((time.perf_counter_ns() - start) / 10**6, 3)
-        uptime_value = utils.formatted_uptime()
-        pingm_value = self.config.get("pingm", "N/A")
-        ping_hint_value = self.config["hint"] if random.choice([0, 0, 1]) == 1 else ""
-
-    # Форматируем текст
-        formatted_text = self.config["text"].format(
-            ping=ping_value,
-            uptime=uptime_value,
-            ping_hint=ping_hint_value,
-            pingm=pingm_value# Убедитесь, что pingm здесь не используется, если он не нужен
-        )
-
-    # Передаем отформатированный текст в utils.answer
-        pingm = utils.answer(messagep, formatted_text)
-        return pingm
         platform = utils.get_named_platform()
 
         for emoji, icon in [
@@ -120,7 +97,6 @@ class HikkaInfoMod(loader.Module):
                 upd=upd,
                 uptime=utils.formatted_uptime(),
                 cpu_usage=utils.get_cpu_usage(),
-                pingm=pingm,
                 ram_usage=f"{utils.get_ram_usage()} MB",
                 branch=version.branch,
             )
@@ -135,7 +111,6 @@ class HikkaInfoMod(loader.Module):
                 f"</b> {utils.formatted_uptime()}\n\n<b>{{}}"
                 f' {self.strings("cpu_usage")}:'
                 f"</b> <i>~{utils.get_cpu_usage()} %</i>\n<b>{{}}"
-                f' {self.strings("pingm")}: {pingm}\n{{}}'
                 f' {self.strings("ram_usage")}:'
                 f"</b> <i>~{utils.get_ram_usage()} MB</i>\n<b>{{}}</b>"
             ).format(
@@ -196,7 +171,7 @@ class HikkaInfoMod(loader.Module):
         if self.config["custom_button"]:
             await self.inline.form(
                 message=message,
-                text=self._render_info(True, message),
+                text=self._render_info(True),
                 reply_markup=self._get_mark(),
                 **(
                     {"photo": self.config["banner_url"]}
