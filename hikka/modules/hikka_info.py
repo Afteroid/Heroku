@@ -68,7 +68,7 @@ class HikkaInfoMod(loader.Module):
         start = time.perf_counter_ns()
         messagep = utils.answer(message, "🔥")
         if self.config["text"] is None:
-        self.config["text"] = "Ping: {ping}"
+            self.config["text"] = "Ping: {ping}"
         pingm = utils.answer(messagep,self.config["text"].format(ping=round((time.perf_counter_ns() - start) / 10**6, 3),uptime=utils.formatted_uptime(),ping_hint=((self.config["hint"]) if random.choice([0, 0, 1]) == 1 else "")),)
 
         platform = utils.get_named_platform()
