@@ -27,6 +27,11 @@ class HikkaInfoMod(loader.Module):
                 doc=lambda: self.strings("_cfg_cst_msg"),
             ),
             loader.ConfigValue(
+                "text",
+                "{pingm}",  # Значение по умолчанию
+                lambda: self.strings("_cfg_text"),
+            ),
+            loader.ConfigValue(
                 "custom_button",
                 ["🌘 Support chat", "https://t.me/heroku_talks"],
                 lambda: self.strings("_cfg_cst_btn"),
