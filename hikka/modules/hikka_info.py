@@ -57,7 +57,7 @@ class HikkaInfoMod(loader.Module):
         )
         build = utils.get_commit_url()
         _version = f'<i>{".".join(list(map(str, list(version.__version__))))}</i>'
-        prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»
+        prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»"
         start = time.perf_counter_ns()
         messagep = utils.answer(message, "🔥")
         pingm = utils.answer(message,self.config["text"].format(ping=round((time.perf_counter_ns() - start) / 10**6, 3),uptime=utils.formatted_uptime(),ping_hint=((self.config["hint"]) if random.choice([0, 0, 1]) == 1 else "")),)
