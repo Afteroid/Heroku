@@ -80,6 +80,7 @@ class HikkaInfoMod(loader.Module):
 
     # Передаем отформатированный текст в utils.answer
         pingm = utils.answer(messagep, formatted_text)
+        return pingm
         platform = utils.get_named_platform()
 
         for emoji, icon in [
