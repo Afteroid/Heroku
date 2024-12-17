@@ -57,7 +57,10 @@ class HikkaInfoMod(loader.Module):
         )
         build = utils.get_commit_url()
         _version = f'<i>{".".join(list(map(str, list(version.__version__))))}</i>'
-        prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»"
+        prefix = f"«<code>{utils.escape_html(self.get_prefix())}</code>»
+        start = time.perf_counter_ns()
+        messagep = utils.answer(message, "🔥")
+        pingm = utils.answer(message,self.config["text"].format(ping=round((time.perf_counter_ns() - start) / 10**6, 3),uptime=utils.formatted_uptime(),ping_hint=((self.config["hint"]) if random.choice([0, 0, 1]) == 1 else "")),)
 
         platform = utils.get_named_platform()
 
@@ -87,6 +90,7 @@ class HikkaInfoMod(loader.Module):
                 else ""
             )
             + self.config["custom_message"].format(
+                messagep=messagep,
                 me=me,
                 version=_version,
                 build=build,
@@ -95,6 +99,7 @@ class HikkaInfoMod(loader.Module):
                 upd=upd,
                 uptime=utils.formatted_uptime(),
                 cpu_usage=utils.get_cpu_usage(),
+                pingm=pingm,
                 ram_usage=f"{utils.get_ram_usage()} MB",
                 branch=version.branch,
             )
@@ -109,6 +114,7 @@ class HikkaInfoMod(loader.Module):
                 f"</b> {utils.formatted_uptime()}\n\n<b>{{}}"
                 f' {self.strings("cpu_usage")}:'
                 f"</b> <i>~{utils.get_cpu_usage()} %</i>\n<b>{{}}"
+                f' {self.strings("pingm")}: {pingm}\n{{}}'
                 f' {self.strings("ram_usage")}:'
                 f"</b> <i>~{utils.get_ram_usage()} MB</i>\n<b>{{}}</b>"
             ).format(
