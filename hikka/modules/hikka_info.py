@@ -6,6 +6,7 @@
 
 import git
 import time
+import random
 from hikkatl.tl.types import Message
 from hikkatl.utils import get_display_name
 
