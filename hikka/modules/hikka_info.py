@@ -176,7 +176,7 @@ class HikkaInfoMod(loader.Module):
         if self.config["custom_button"]:
             await self.inline.form(
                 message=message,
-                text=self._render_info(True),
+                text=self._render_info(True, message),
                 reply_markup=self._get_mark(),
                 **(
                     {"photo": self.config["banner_url"]}
